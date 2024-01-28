@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+#define SALARIO_GERENTE 1380.57 * 4
+#define SALARIO_HORARIO 560.84
+#define SALARIO_COMISION 425.99
+#define PORCENTAJE_COMISION 0.046
+
+int main() {
+    int opcion;
+    float horas, ventas, salario;
+    int contGerentes = 0, contHorario = 0, contComision = 0;
+    float totalGerentes = 0, totalHorario = 0, totalComision = 0, totalNomina = 0;
+
+    do {
+        printf("Ingrese la categoría del empleado (1-Gerente, 2-Horario, 3-Comisión, 0-Salir): ");
+        scanf("%d", &opcion);
+
+        if(opcion == 1) {
+            salario = SALARIO_GERENTE;
+            printf("El salario del gerente es: %.2f dólares\n", salario);
+            contGerentes++;
+            totalGerentes += salario;
+        } else if(opcion == 2) {
+            printf("Ingrese las horas trabajadas: ");
+            scanf("%f", &horas);
+            if(horas <= 40) {
+                salario = SALARIO_HORARIO;
+            } else {
+                salario = SALARIO_HORARIO + ((horas - 40) * (SALARIO_HORARIO/40) * 1.5);
+            }
+            printf("El salario del empleado horario es: %.2f dólares\n", salario);
+            contHorario++;
+            totalHorario += salario;
+        } else if(opcion == 3) {
+            printf("Ingrese el total de ventas: ");
+            scanf("%f", &ventas);
+            salario = SALARIO_COMISION + (ventas * PORCENTAJE_COMISION);
+            printf("El salario del empleado a comisión es: %.2f dólares\n", salario);
+            contComision++;
+            totalComision += salario;
+        }
+    } while(opcion != 0);
+
+    totalNomina = totalGerentes + totalHorario + totalComision;
+
+    printf("\nResumen de nómina:\n");
+    printf("Total de gerentes: %d, Total pagado: %.2f dólares, Porcentaje del total: %.2f%%\n", contGerentes, totalGerentes, (totalGerentes/totalNomina)*100);
+    printf("Total de empleados horario: %d, Total pagado: %.2f dólares, Porcentaje del total: %.2f%%\n", contHorario, totalHorario, (totalHorario/totalNomina)*100);
+    printf("Total de empleados a comisión: %d, Total pagado: %.2f dólares, Porcentaje del total: %.2f%%\n", contComision, totalComision, (totalComision/totalNomina)*100);
+    printf("Total de nómina: %.2f dólares\n", totalNomina);
+
+    return 0;
+}
